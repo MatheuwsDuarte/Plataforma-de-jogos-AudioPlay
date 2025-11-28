@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AudioPlay - Plataforma de Jogos Acessíveis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-dark': '#0f172a',
+                        'brand-card': '#1e293b',
+                        'brand-accent': '#38bdf8',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Melhorias de acessibilidade para foco */
+        :focus-visible {
+            outline: 4px solid #38bdf8;
+            outline-offset: 2px;
+        }
+        
+        /* Classe utilitária para esconder elementos visualmente mas manter para leitores de tela */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-gray-100 font-sans min-h-screen flex flex-col">
+
+    <!-- Pular para conteúdo (Acessibilidade) -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:bg-brand-accent focus:text-black focus:p-4 focus:z-50 focus:rounded font-bold">
+        Pular para o conteúdo principal
+    </a>
+
+    <!-- Cabeçalho -->
+    <header class="bg-brand-card shadow-lg border-b border-gray-700">
+        <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <!-- Ícone decorativo (SVG) -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <h1 class="text-2xl font-bold tracking-tight">AudioPlay</h1>
+            </div>
+            <nav>
+                <a href="#sugerir" class="text-sm font-semibold text-brand-accent hover:text-white transition-colors underline decoration-2 decoration-transparent hover:decoration-brand-accent">
+                    Sugerir um Jogo
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main id="main-content" class="flex-grow container mx-auto px-4 py-8">
+
+        <!-- Seção de Introdução -->
+        <section class="text-center mb-10 max-w-3xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">
+                Plataforma de Jogos AudioPlay
+            </h2>
+            <p class="text-lg text-gray-400">
+                Encontre, filtre e baixe jogos verificados para diferentes níveis de deficiência visual.
+            </p>
+        </section>
+
+        <!-- Área de Filtros e Busca (O Coração do MVP) -->
+        <section class="bg-brand-card p-6 rounded-xl shadow-md mb-12 border border-gray-700" aria-labelledby="filter-heading">
+            <h3 id="filter-heading" class="text-xl font-semibold mb-4 text-brand-accent flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                </svg>
+                Filtrar Jogos
+            </h3>
+            
+            <form id="filter-form" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Filtro por Texto -->
+                <div class="flex flex-col gap-2">
+                    <label for="search" class="font-medium text-gray-300">Buscar por nome:</label>
+                    <input type="text" id="search" placeholder="Ex: The Vale, Hades..." 
+                           class="bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors">
+                </div>
+
+                <!-- Filtro por Nível de Acessibilidade (O diferencial) -->
+                <div class="flex flex-col gap-2">
+                    <label for="accessibility-level" class="font-medium text-gray-300">Nível de Acessibilidade:</label>
+                    <select id="accessibility-level" class="bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-brand-accent focus:ring-1 focus:ring-brand-accent cursor-pointer">
+                        <option value="todos">Todos os Níveis</option>
+                        <option value="cego-total">Cego Total (Audio Games)</option>
+                        <option value="baixa-visao">Baixa Visão (Alto Contraste)</option>
+                        <option value="leitor-tela">Compatível com Leitor de Tela</option>
+                    </select>
+                </div>
+
+                <!-- Filtro por Categoria -->
+                <div class="flex flex-col gap-2">
+                    <label for="category" class="font-medium text-gray-300">Categoria do Jogo:</label>
+                    <select id="category" class="bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-brand-accent focus:ring-1 focus:ring-brand-accent cursor-pointer">
+                        <option value="todos">Todas as Categorias</option>
+                        <option value="acao">Ação / Aventura</option>
+                        <option value="rpg">RPG</option>
+                        <option value="puzzle">Puzzle / Quebra-cabeça</option>
+                        <option value="simulacao">Simulação</option>
+                    </select>
+                </div>
+            </form>
+        </section>
+
+        <!-- Grid de Resultados -->
+        <section aria-label="Lista de jogos">
+            <div id="games-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Jogo 1: The Vale -->
+                <article class="game-card bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
+                         data-level="cego-total" data-category="acao">
+                    <div class="relative h-48 bg-gray-800">
+                        <img src="https://placehold.co/600x400/000000/FFFFFF/png?text=Audio+Game" alt="Capa do jogo The Vale: Shadow of the Crown, fundo escuro com apenas som" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        <div class="absolute top-2 right-2 bg-black/80 text-brand-accent text-xs font-bold px-2 py-1 rounded border border-brand-accent">
+                            Áudio 3D
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col h-full">
+                        <div class="mb-4">
+                            <h3 class="text-2xl font-bold text-white mb-2">The Vale</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-green-900 text-green-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-green-700">Cego Total</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Ação</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Uma aventura baseada puramente em áudio 3D. Você joga como um herói cego e deve lutar e explorar usando apenas sua audição.
+                            </p>
+                        </div>
+                        <div class="mt-auto pt-4 border-t border-gray-700">
+                            <a href="https://store.steampowered.com/app/1325880/The_Vale_Shadow_of_the_Crown/" target="_blank" rel="noopener noreferrer"
+                               class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
+                                Baixar / Comprar Jogo
+                                <span class="sr-only">The Vale na Steam</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Jogo 2: A Blind Legend -->
+                <article class="game-card bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
+                         data-level="cego-total" data-category="acao">
+                    <div class="relative h-48 bg-gray-800">
+                        <img src="https://placehold.co/600x400/333333/FFFFFF/png?text=Cavaleiro" alt="Ilustração de um cavaleiro em A Blind Legend" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                    </div>
+                    <div class="p-6 flex flex-col h-full">
+                        <div class="mb-4">
+                            <h3 class="text-2xl font-bold text-white mb-2">A Blind Legend</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-green-900 text-green-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-green-700">Cego Total</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Aventura</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                O primeiro jogo de ação-aventura sem vídeo. Use seus ouvidos e a tela touch para guiar o cavaleiro Edward.
+                            </p>
+                        </div>
+                        <div class="mt-auto pt-4 border-t border-gray-700">
+                            <a href="https://store.steampowered.com/app/437530/A_Blind_Legend/" target="_blank" rel="noopener noreferrer"
+                               class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
+                                Baixar / Comprar Jogo
+                                <span class="sr-only">A Blind Legend</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Jogo 3: Stardew Valley (Mods) -->
+                <article class="game-card bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
+                         data-level="leitor-tela" data-category="simulacao">
+                    <div class="relative h-48 bg-gray-800">
+                        <img src="https://placehold.co/600x400/2ecc71/FFFFFF/png?text=Fazenda" alt="Pixel art de uma fazenda em Stardew Valley" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        <div class="absolute top-2 right-2 bg-yellow-600 text-white text-xs font-bold px-2 py-1 rounded">
+                            Requer Mod
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col h-full">
+                        <div class="mb-4">
+                            <h3 class="text-2xl font-bold text-white mb-2">Stardew Valley</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-blue-900 text-blue-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-blue-700">Leitor de Tela</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Simulação</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Com o mod "Stardew Access", este famoso jogo de fazenda se torna jogável com leitores de tela.
+                            </p>
+                        </div>
+                        <div class="mt-auto pt-4 border-t border-gray-700">
+                            <a href="https://www.nexusmods.com/stardewvalley/mods/10638" target="_blank" rel="noopener noreferrer"
+                               class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
+                                Baixar Mod de Acesso
+                                <span class="sr-only">para Stardew Valley</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Jogo 4: The Last of Us Part I -->
+                <article class="game-card bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
+                         data-level="baixa-visao" data-category="acao">
+                    <div class="relative h-48 bg-gray-800">
+                        <img src="https://placehold.co/600x400/555555/FFFFFF/png?text=TLOU" alt="Cena dramática de The Last of Us" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        <div class="absolute top-2 right-2 bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded">
+                            Nativo
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col h-full">
+                        <div class="mb-4">
+                            <h3 class="text-2xl font-bold text-white mb-2">The Last of Us Part I</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-purple-900 text-purple-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-purple-700">Baixa Visão</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Ação</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Oferece opções nativas robustas de alto contraste, ampliação e áudio descritivo para navegação e combate.
+                            </p>
+                        </div>
+                        <div class="mt-auto pt-4 border-t border-gray-700">
+                            <a href="https://www.playstation.com/pt-br/games/the-last-of-us-part-i/" target="_blank" rel="noopener noreferrer"
+                               class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
+                                Comprar Jogo
+                                <span class="sr-only">The Last of Us Part I</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Jogo 5: Hearthstone -->
+                <article class="game-card bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
+                         data-level="leitor-tela" data-category="puzzle">
+                    <div class="relative h-48 bg-gray-800">
+                        <img src="https://placehold.co/600x400/8b4513/FFFFFF/png?text=Cartas" alt="Tabuleiro de cartas do Hearthstone" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        <div class="absolute top-2 right-2 bg-yellow-600 text-white text-xs font-bold px-2 py-1 rounded">
+                            Requer Mod
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col h-full">
+                        <div class="mb-4">
+                            <h3 class="text-2xl font-bold text-white mb-2">Hearthstone Access</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-blue-900 text-blue-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-blue-700">Leitor de Tela</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Estratégia/Cartas</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Um patch que torna o famoso jogo de cartas da Blizzard totalmente acessível para leitores de tela como NVDA.
+                            </p>
+                        </div>
+                        <div class="mt-auto pt-4 border-t border-gray-700">
+                            <a href="https://hearthstoneaccess.github.io/" target="_blank" rel="noopener noreferrer"
+                               class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
+                                Baixar Patch
+                                <span class="sr-only">para Hearthstone Access</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+            
+            <!-- Mensagem de "Nenhum resultado" (oculta por padrão) -->
+            <div id="no-results" class="hidden text-center py-12">
+                <p class="text-xl text-gray-400">Nenhum jogo encontrado com esses filtros.</p>
+                <button onclick="resetFilters()" class="mt-4 text-brand-accent hover:underline">Limpar filtros</button>
+            </div>
+        </section>
+
+        <!-- Seção Simples de Rodapé/Sugestão -->
+        <section id="sugerir" class="mt-20 border-t border-gray-800 pt-10 text-center">
+            <h3 class="text-2xl font-bold text-white mb-4">Conhece outro jogo acessível?</h3>
+            <p class="text-gray-400 mb-6 max-w-2xl mx-auto">
+                Ajude a comunidade a crescer. Se você conhece um jogo ou mod que permite acessibilidade, nos avise.
+            </p>
+            <a href="mailto:contato@audioplay.com.br" class="inline-block border border-brand-accent text-brand-accent font-semibold px-6 py-3 rounded-lg hover:bg-brand-accent hover:text-brand-dark transition-colors">
+                Enviar Sugestão por E-mail
+            </a>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-900 border-t border-gray-800 mt-12 py-8 text-center text-sm text-gray-500">
+        <p>&copy; 2025 AudioPlay - Projeto MVP Acadêmico.</p>
+        <p class="mt-2">Todos os links externos são de responsabilidade de seus criadores.</p>
+    </footer>
+
+    <!-- Script Simples para Filtragem (Front-end Logic) -->
+    <script>
+        // Elementos do DOM
+        const searchInput = document.getElementById('search');
+        const levelSelect = document.getElementById('accessibility-level');
+        const categorySelect = document.getElementById('category');
+        const gamesGrid = document.getElementById('games-grid');
+        const gameCards = document.querySelectorAll('.game-card');
+        const noResultsMsg = document.getElementById('no-results');
+
+        // Função de Filtragem
+        function filterGames() {
+            const searchText = searchInput.value.toLowerCase();
+            const selectedLevel = levelSelect.value;
+            const selectedCategory = categorySelect.value;
+            let visibleCount = 0;
+
+            gameCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const cardLevel = card.getAttribute('data-level');
+                const cardCategory = card.getAttribute('data-category');
+
+                // Lógica de filtro: Texto E Nível E Categoria
+                const matchesText = title.includes(searchText);
+                const matchesLevel = selectedLevel === 'todos' || cardLevel === selectedLevel;
+                
+                // Nota: Categorias simplificadas para demonstração
+                // Se categoria for "todos", aceita. Se não, verifica se bate ou se é uma categoria aproximada
+                let matchesCategory = selectedCategory === 'todos';
+                if (!matchesCategory) {
+                    // Mapeamento simples para o demo, já que alguns jogos podem ter varias tags
+                    if (selectedCategory === cardCategory) matchesCategory = true;
+                    // Exceção para "puzzle" no Hearthstone que marquei como puzzle no select mas pode estar diferente no data
+                    if (selectedCategory === 'puzzle' && cardCategory === 'puzzle') matchesCategory = true;
+                }
+
+                if (matchesText && matchesLevel && matchesCategory) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // Mostra mensagem se não houver resultados
+            if (visibleCount === 0) {
+                noResultsMsg.classList.remove('hidden');
+            } else {
+                noResultsMsg.classList.add('hidden');
+            }
+        }
+
+        // Função para limpar filtros
+        function resetFilters() {
+            searchInput.value = '';
+            levelSelect.value = 'todos';
+            categorySelect.value = 'todos';
+            filterGames();
+        }
+
+        // Adiciona Listeners aos inputs
+        searchInput.addEventListener('input', filterGames);
+        levelSelect.addEventListener('change', filterGames);
+        categorySelect.addEventListener('change', filterGames);
+    </script>
+</body>
+</html>
