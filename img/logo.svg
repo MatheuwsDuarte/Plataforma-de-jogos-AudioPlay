@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Fundo Circular Sutil (Opcional, dá profundidade) -->
+  <circle cx="100" cy="100" r="90" fill="#1e293b" stroke="#38bdf8" stroke-width="2" opacity="0.5"/>
+  
+  <!-- O Triângulo de Play -->
+  <path d="M75 60 L140 100 L75 140 Z" fill="#38bdf8" stroke="#38bdf8" stroke-width="4" stroke-linejoin="round"/>
+  
+  <!-- Onda Sonora 1 (Pequena) -->
+  <path d="M145 85 Q155 100 145 115" stroke="#f3f4f6" stroke-width="6" stroke-linecap="round" fill="none"/>
+  
+  <!-- Onda Sonora 2 (Média) -->
+  <path d="M160 70 Q180 100 160 130" stroke="#38bdf8" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.8"/>
+</svg>
