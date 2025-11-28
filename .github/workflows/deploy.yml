@@ -1,0 +1,50 @@
+# Nome do Workflow que aparecerá na aba "Actions" do GitHub
+name: Deploy do Site AudioPlay
+
+# Gatilhos: Quando esse workflow deve rodar?
+on:
+  # Roda quando houver um push na branch 'main'
+  push:
+    branches: ["main"]
+
+  # Permite rodar manualmente na aba "Actions" se necessário
+  workflow_dispatch:
+
+# Permissões necessárias para o GITHUB_TOKEN fazer o deploy
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Garante que apenas um deploy rode por vez
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Trabalho único de Deploy
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest # Roda em uma máquina virtual Linux
+    steps:
+      # Passo 1: Baixa o código do seu repositório
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # Passo 2: Configura o GitHub Pages
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      # Passo 3: Faz o upload dos arquivos (HTML, CSS, JS, IMG)
+      - name: Upload dos artefatos (Arquivos do site)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # O ponto '.' significa que ele vai pegar tudo na pasta raiz
+          path: '.'
+
+      # Passo 4: Publica o site
+      - name: Deploy para o GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
