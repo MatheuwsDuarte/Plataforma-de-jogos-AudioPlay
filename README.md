@@ -46,19 +46,18 @@ Pronto! O site carregará com todas as funcionalidades.
 
 O projeto está hospedado via GitHub Pages e pode ser acessado no link:
 
-[Insira o link do seu GitHub Pages aqui após configurar]
-Exemplo: https://www.google.com/search?q=https://seu-usuario.github.io/AudioPlay/
+[https://matheuwsduarte.github.io/Plataforma-de-jogos-AudioPlay/]
 
 🤝 Equipe
 
 Projeto desenvolvido para a disciplina de Empreendedorismo por:
 
-[Nome do Aluno 1]
+Daniel
 
-[Nome do Aluno 2]
+Gabriela
 
-[Nome do Aluno 3]
+Matheus 
 
-[Nome do Aluno 4]
+Simone
 
 Este é um projeto acadêmico sem fins lucrativos. Todos os direitos das imagens e jogos citados pertencem aos seus respectivos criadores.
