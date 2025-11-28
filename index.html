@@ -40,6 +40,16 @@
             white-space: nowrap;
             border-width: 0;
         }
+
+        /* Respeita preferência por movimento reduzido (Labirintite/Vestibular) */
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-brand-dark text-gray-100 font-sans min-h-screen flex flex-col">
@@ -61,9 +71,14 @@
                 <h1 class="text-2xl font-bold tracking-tight">AudioPlay</h1>
             </div>
             <nav>
-                <a href="#sugerir" class="text-sm font-semibold text-brand-accent hover:text-white transition-colors underline decoration-2 decoration-transparent hover:decoration-brand-accent">
-                    Sugerir um Jogo
-                </a>
+                <div class="flex gap-4">
+                    <a href="#sobre" class="text-sm font-semibold text-gray-300 hover:text-white transition-colors">
+                        Sobre o Projeto
+                    </a>
+                    <a href="#sugerir" class="text-sm font-semibold text-brand-accent hover:text-white transition-colors underline decoration-2 decoration-transparent hover:decoration-brand-accent">
+                        Sugerir um Jogo
+                    </a>
+                </div>
             </nav>
         </div>
     </header>
@@ -74,15 +89,34 @@
         <!-- Seção de Introdução -->
         <section class="text-center mb-10 max-w-3xl mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">
-                Plataforma de Jogos AudioPlay
+                O seu portal de jogos acessíveis
             </h2>
             <p class="text-lg text-gray-400">
                 Encontre, filtre e baixe jogos verificados para diferentes níveis de deficiência visual.
             </p>
         </section>
 
+        <!-- Legenda de Acessibilidade (Novo: Ajuda famílias e educadores) -->
+        <section class="mb-10" aria-labelledby="legend-title">
+            <h3 id="legend-title" class="sr-only">Legenda das Categorias de Acessibilidade</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div class="bg-gray-800 p-3 rounded border-l-4 border-green-500 flex items-center gap-3">
+                    <span class="font-bold text-green-400">Cego Total:</span>
+                    <span class="text-gray-300">Jogável sem necessidade de visão (Audio Games).</span>
+                </div>
+                <div class="bg-gray-800 p-3 rounded border-l-4 border-purple-500 flex items-center gap-3">
+                    <span class="font-bold text-purple-400">Baixa Visão:</span>
+                    <span class="text-gray-300">Alto contraste, fontes grandes ou zoom.</span>
+                </div>
+                <div class="bg-gray-800 p-3 rounded border-l-4 border-blue-500 flex items-center gap-3">
+                    <span class="font-bold text-blue-400">Leitor de Tela:</span>
+                    <span class="text-gray-300">Menus compatíveis com NVDA/VoiceOver.</span>
+                </div>
+            </div>
+        </section>
+
         <!-- Área de Filtros e Busca (O Coração do MVP) -->
-        <section class="bg-brand-card p-6 rounded-xl shadow-md mb-12 border border-gray-700" aria-labelledby="filter-heading">
+        <section class="bg-brand-card p-6 rounded-xl shadow-md mb-8 border border-gray-700" aria-labelledby="filter-heading">
             <h3 id="filter-heading" class="text-xl font-semibold mb-4 text-brand-accent flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
@@ -90,7 +124,7 @@
                 Filtrar Jogos
             </h3>
             
-            <form id="filter-form" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <form id="filter-form" class="grid grid-cols-1 md:grid-cols-3 gap-6" onsubmit="return false;">
                 <!-- Filtro por Texto -->
                 <div class="flex flex-col gap-2">
                     <label for="search" class="font-medium text-gray-300">Buscar por nome:</label>
@@ -123,6 +157,11 @@
             </form>
         </section>
 
+        <!-- Contador de Resultados (ARIA Live Region - CRUCIAL para Leitores de Tela) -->
+        <div aria-live="polite" aria-atomic="true" class="mb-6 text-gray-400 font-medium">
+            <span id="result-count">Exibindo 5 jogos</span>
+        </div>
+
         <!-- Grid de Resultados -->
         <section aria-label="Lista de jogos">
             <div id="games-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -150,7 +189,7 @@
                         <div class="mt-auto pt-4 border-t border-gray-700">
                             <a href="https://store.steampowered.com/app/1325880/The_Vale_Shadow_of_the_Crown/" target="_blank" rel="noopener noreferrer"
                                class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
-                                Baixar / Comprar Jogo
+                                Baixar / Comprar na Steam
                                 <span class="sr-only">The Vale na Steam</span>
                             </a>
                         </div>
@@ -177,7 +216,7 @@
                         <div class="mt-auto pt-4 border-t border-gray-700">
                             <a href="https://store.steampowered.com/app/437530/A_Blind_Legend/" target="_blank" rel="noopener noreferrer"
                                class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
-                                Baixar / Comprar Jogo
+                                Baixar / Comprar na Steam
                                 <span class="sr-only">A Blind Legend</span>
                             </a>
                         </div>
@@ -201,14 +240,17 @@
                                 <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Simulação</span>
                             </div>
                             <p class="text-gray-400 text-sm leading-relaxed">
-                                Com o mod "Stardew Access", este famoso jogo de fazenda se torna jogável com leitores de tela.
+                                Jogo de fazenda jogável com leitores de tela usando o mod "Stardew Access". É necessário ter o jogo original.
                             </p>
                         </div>
-                        <div class="mt-auto pt-4 border-t border-gray-700">
+                        <div class="mt-auto pt-4 border-t border-gray-700 flex flex-col gap-2">
                             <a href="https://www.nexusmods.com/stardewvalley/mods/10638" target="_blank" rel="noopener noreferrer"
                                class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
                                 Baixar Mod de Acesso
-                                <span class="sr-only">para Stardew Valley</span>
+                            </a>
+                            <a href="https://store.steampowered.com/app/413150/Stardew_Valley/" target="_blank" rel="noopener noreferrer"
+                               class="block w-full text-center bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 rounded-lg transition-colors text-sm">
+                                Comprar Jogo Original (Steam)
                             </a>
                         </div>
                     </div>
@@ -237,7 +279,7 @@
                         <div class="mt-auto pt-4 border-t border-gray-700">
                             <a href="https://www.playstation.com/pt-br/games/the-last-of-us-part-i/" target="_blank" rel="noopener noreferrer"
                                class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
-                                Comprar Jogo
+                                Comprar na PS Store
                                 <span class="sr-only">The Last of Us Part I</span>
                             </a>
                         </div>
@@ -261,14 +303,17 @@
                                 <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Estratégia/Cartas</span>
                             </div>
                             <p class="text-gray-400 text-sm leading-relaxed">
-                                Um patch que torna o famoso jogo de cartas da Blizzard totalmente acessível para leitores de tela como NVDA.
+                                Um patch que torna o jogo de cartas acessível para leitores de tela. É necessário o jogo base instalado.
                             </p>
                         </div>
-                        <div class="mt-auto pt-4 border-t border-gray-700">
+                        <div class="mt-auto pt-4 border-t border-gray-700 flex flex-col gap-2">
                             <a href="https://hearthstoneaccess.github.io/" target="_blank" rel="noopener noreferrer"
                                class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
-                                Baixar Patch
-                                <span class="sr-only">para Hearthstone Access</span>
+                                Baixar Patch de Acesso
+                            </a>
+                            <a href="https://hearthstone.blizzard.com/pt-br" target="_blank" rel="noopener noreferrer"
+                               class="block w-full text-center bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 rounded-lg transition-colors text-sm">
+                                Baixar Jogo Base (Grátis)
                             </a>
                         </div>
                     </div>
@@ -283,8 +328,21 @@
             </div>
         </section>
 
+        <!-- Seção Sobre o Projeto (Novo: Credibilidade) -->
+        <section id="sobre" class="mt-16 bg-brand-card p-8 rounded-xl border border-gray-700">
+            <h2 class="text-2xl font-bold text-white mb-4">Sobre o AudioPlay</h2>
+            <div class="text-gray-400 space-y-4">
+                <p>
+                    O AudioPlay é um projeto acadêmico de Empreendedorismo que visa resolver a lacuna de informação no mercado de jogos acessíveis. 
+                </p>
+                <p>
+                    Nossa missão é centralizar e validar jogos que permitam a autonomia de pessoas com deficiência visual, conectando jogadores a desenvolvedores e tecnologias assistivas.
+                </p>
+            </div>
+        </section>
+
         <!-- Seção Simples de Rodapé/Sugestão -->
-        <section id="sugerir" class="mt-20 border-t border-gray-800 pt-10 text-center">
+        <section id="sugerir" class="mt-12 border-t border-gray-800 pt-10 text-center">
             <h3 class="text-2xl font-bold text-white mb-4">Conhece outro jogo acessível?</h3>
             <p class="text-gray-400 mb-6 max-w-2xl mx-auto">
                 Ajude a comunidade a crescer. Se você conhece um jogo ou mod que permite acessibilidade, nos avise.
@@ -310,6 +368,7 @@
         const gamesGrid = document.getElementById('games-grid');
         const gameCards = document.querySelectorAll('.game-card');
         const noResultsMsg = document.getElementById('no-results');
+        const resultCountSpan = document.getElementById('result-count');
 
         // Função de Filtragem
         function filterGames() {
@@ -345,11 +404,14 @@
                 }
             });
 
-            // Mostra mensagem se não houver resultados
+            // Atualiza mensagens de UI e ARIA
             if (visibleCount === 0) {
                 noResultsMsg.classList.remove('hidden');
+                resultCountSpan.textContent = "Nenhum jogo encontrado.";
             } else {
                 noResultsMsg.classList.add('hidden');
+                // Atualiza o texto para leitores de tela
+                resultCountSpan.textContent = `Exibindo ${visibleCount} jogo${visibleCount !== 1 ? 's' : ''}`;
             }
         }
 
@@ -365,6 +427,9 @@
         searchInput.addEventListener('input', filterGames);
         levelSelect.addEventListener('change', filterGames);
         categorySelect.addEventListener('change', filterGames);
+
+        // Inicializa o contador
+        filterGames();
     </script>
 </body>
 </html>
