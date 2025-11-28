@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AudioPlay - Plataforma de Jogos Acessíveis</title>
+    
+    <!-- Tailwind CSS (Via CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -21,34 +23,9 @@
             },
         }
     </script>
-    <style>
-        /* Melhorias de acessibilidade para foco */
-        :focus-visible {
-            outline: 4px solid #38bdf8;
-            outline-offset: 2px;
-        }
-        
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border-width: 0;
-        }
 
-        @media (prefers-reduced-motion: reduce) {
-            *, ::before, ::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-    </style>
+    <!-- Seu CSS Personalizado -->
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="bg-brand-dark text-gray-100 font-sans min-h-screen flex flex-col">
 
@@ -148,15 +125,16 @@
             <span id="result-count">Exibindo 5 jogos</span>
         </div>
 
-        <!-- Grid de Jogos (Cards corrigidos) -->
+        <!-- Grid de Jogos -->
         <section aria-label="Lista de jogos">
             <div id="games-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
-                <!-- Jogo 1: The Vale (Estrutura Flex Corrigida) -->
+                <!-- Jogo 1 -->
                 <article class="game-card flex flex-col bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
                          data-level="cego-total" data-category="acao">
                     <div class="relative h-48 bg-gray-800 shrink-0">
                         <a href="https://store.steampowered.com/app/1325880/The_Vale_Shadow_of_the_Crown/" target="_blank" tabindex="-1" class="block h-full w-full focus:outline-none">
+                            <!-- NOTA: Se você baixou a imagem, troque o src abaixo para "img/the-vale.jpg" -->
                             <img src="https://placehold.co/600x400/000000/FFFFFF/png?text=Audio+Game" alt="Capa do jogo The Vale: Shadow of the Crown" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
                             <div class="absolute top-2 right-2 bg-black/80 text-brand-accent text-xs font-bold px-2 py-1 rounded border border-brand-accent">
                                 Áudio 3D
@@ -176,7 +154,6 @@
                                 Uma aventura baseada puramente em áudio 3D. Você joga como um herói cego e deve lutar e explorar usando apenas sua audição.
                             </p>
                         </div>
-                        <!-- Botão forçado para o rodapé -->
                         <div class="mt-auto pt-4 border-t border-gray-700 w-full">
                             <a href="https://store.steampowered.com/app/1325880/The_Vale_Shadow_of_the_Crown/" target="_blank" rel="noopener noreferrer"
                                class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
@@ -186,7 +163,7 @@
                     </div>
                 </article>
 
-                <!-- Jogo 2: A Blind Legend -->
+                <!-- Jogo 2 -->
                 <article class="game-card flex flex-col bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
                          data-level="cego-total" data-category="acao">
                     <div class="relative h-48 bg-gray-800 shrink-0">
@@ -216,7 +193,7 @@
                     </div>
                 </article>
 
-                <!-- Jogo 3: Stardew Valley -->
+                <!-- Jogo 3 -->
                 <article class="game-card flex flex-col bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
                          data-level="leitor-tela" data-category="simulacao">
                     <div class="relative h-48 bg-gray-800 shrink-0">
@@ -253,7 +230,7 @@
                     </div>
                 </article>
 
-                <!-- Jogo 4: The Last of Us -->
+                <!-- Jogo 4 -->
                 <article class="game-card flex flex-col bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
                          data-level="baixa-visao" data-category="acao">
                     <div class="relative h-48 bg-gray-800 shrink-0">
@@ -286,7 +263,7 @@
                     </div>
                 </article>
 
-                <!-- Jogo 5: Hearthstone -->
+                <!-- Jogo 5 -->
                 <article class="game-card flex flex-col bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
                          data-level="leitor-tela" data-category="puzzle">
                     <div class="relative h-48 bg-gray-800 shrink-0">
@@ -362,65 +339,7 @@
         <p class="mt-2">Todos os links externos são de responsabilidade de seus criadores.</p>
     </footer>
 
-    <!-- Script de Filtro -->
-    <script>
-        const searchInput = document.getElementById('search');
-        const levelSelect = document.getElementById('accessibility-level');
-        const categorySelect = document.getElementById('category');
-        const gamesGrid = document.getElementById('games-grid');
-        const gameCards = document.querySelectorAll('.game-card');
-        const noResultsMsg = document.getElementById('no-results');
-        const resultCountSpan = document.getElementById('result-count');
-
-        function filterGames() {
-            const searchText = searchInput.value.toLowerCase();
-            const selectedLevel = levelSelect.value;
-            const selectedCategory = categorySelect.value;
-            let visibleCount = 0;
-
-            gameCards.forEach(card => {
-                const title = card.querySelector('h3').textContent.toLowerCase();
-                const cardLevel = card.getAttribute('data-level');
-                const cardCategory = card.getAttribute('data-category');
-
-                const matchesText = title.includes(searchText);
-                const matchesLevel = selectedLevel === 'todos' || cardLevel === selectedLevel;
-                
-                let matchesCategory = selectedCategory === 'todos';
-                if (!matchesCategory) {
-                    if (selectedCategory === cardCategory) matchesCategory = true;
-                    if (selectedCategory === 'puzzle' && cardCategory === 'puzzle') matchesCategory = true;
-                }
-
-                if (matchesText && matchesLevel && matchesCategory) {
-                    card.classList.remove('hidden');
-                    visibleCount++;
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
-
-            if (visibleCount === 0) {
-                noResultsMsg.classList.remove('hidden');
-                resultCountSpan.textContent = "Nenhum jogo encontrado.";
-            } else {
-                noResultsMsg.classList.add('hidden');
-                resultCountSpan.textContent = `Exibindo ${visibleCount} jogo${visibleCount !== 1 ? 's' : ''}`;
-            }
-        }
-
-        function resetFilters() {
-            searchInput.value = '';
-            levelSelect.value = 'todos';
-            categorySelect.value = 'todos';
-            filterGames();
-        }
-
-        searchInput.addEventListener('input', filterGames);
-        levelSelect.addEventListener('change', filterGames);
-        categorySelect.addEventListener('change', filterGames);
-
-        filterGames();
-    </script>
-</body>
+    <!-- Script JS separado -->
+    <script src="js/script.js"></script>
+</body> 
 </html>
