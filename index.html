@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AudioPlay - Plataforma de Jogos Acessíveis</title>
     <link rel="shortcut icon" type="image/x-icon" href="./img/logo.svg">
-    
-    <!-- Tailwind CSS (Via CDN) -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -25,7 +24,6 @@
         }
     </script>
 
-    <!-- Seu CSS Personalizado -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="bg-brand-dark text-gray-100 font-sans min-h-screen flex flex-col">
@@ -34,7 +32,6 @@
         Pular para o conteúdo principal
     </a>
 
-    <!-- Cabeçalho -->
     <header class="bg-brand-card shadow-lg border-b border-gray-700">
         <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
@@ -59,7 +56,6 @@
 
     <main id="main-content" class="flex-grow container mx-auto px-4 py-8">
 
-        <!-- Introdução -->
         <section class="text-center mb-10 max-w-3xl mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">
                 O seu portal de jogos acessíveis
@@ -69,7 +65,6 @@
             </p>
         </section>
 
-        <!-- Legenda -->
         <section class="mb-10" aria-labelledby="legend-title">
             <h3 id="legend-title" class="sr-only">Legenda das Categorias de Acessibilidade</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
@@ -88,17 +83,18 @@
             </div>
         </section>
 
-        <!-- Filtros -->
         <section class="bg-brand-card p-6 rounded-xl shadow-md mb-8 border border-gray-700" aria-labelledby="filter-heading">
             <h3 id="filter-heading" class="text-xl font-semibold mb-4 text-brand-accent flex items-center gap-2">
                 Filtrar Jogos
             </h3>
-            <form id="filter-form" class="grid grid-cols-1 md:grid-cols-3 gap-6" onsubmit="return false;">
+            <form id="filter-form" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" onsubmit="return false;">
+
                 <div class="flex flex-col gap-2">
                     <label for="search" class="font-medium text-gray-300">Buscar por nome:</label>
-                    <input type="text" id="search" placeholder="Ex: The Vale, Hades..." 
+                    <input type="text" id="search" placeholder="Ex: The Vale, Hades..."
                            class="bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors">
                 </div>
+
                 <div class="flex flex-col gap-2">
                     <label for="accessibility-level" class="font-medium text-gray-300">Nível de Acessibilidade:</label>
                     <select id="accessibility-level" class="bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-brand-accent focus:ring-1 focus:ring-brand-accent cursor-pointer">
@@ -108,68 +104,226 @@
                         <option value="leitor-tela">Compatível com Leitor de Tela</option>
                     </select>
                 </div>
+
                 <div class="flex flex-col gap-2">
-                    <label for="category" class="font-medium text-gray-300">Categoria do Jogo:</label>
+                    <label for="language" class="font-medium text-gray-300">Idioma Principal:</label>
+                    <select id="language" class="bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-brand-accent focus:ring-1 focus:ring-brand-accent cursor-pointer">
+                        <option value="todos">Qualquer Idioma</option>
+                        <option value="portugues">Português (Brasil)</option>
+                        <option value="ingles">Inglês</option>
+                        <option value="espanhol">Espanhol</option>
+                    </select>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label for="price" class="font-medium text-gray-300">Preço:</label>
+                    <select id="price" class="bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-brand-accent focus:ring-1 focus:ring-brand-accent cursor-pointer">
+                        <option value="todos">Grátis ou Pago</option>
+                        <option value="gratuito">Gratuito (Free-to-Play)</option>
+                        <option value="pago">Pago</option>
+                    </select>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label for="category" class="font-medium text-gray-300">Gênero do Jogo:</label>
                     <select id="category" class="bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-brand-accent focus:ring-1 focus:ring-brand-accent cursor-pointer">
-                        <option value="todos">Todas as Categorias</option>
-                        <option value="acao">Ação / Aventura</option>
-                        <option value="rpg">RPG</option>
-                        <option value="puzzle">Puzzle / Quebra-cabeça</option>
+                        <option value="todos">Todos os Gêneros</option>
+                        <option value="acao">Ação</option>
+                        <option value="arcade">Arcade</option>
+                        <option value="aventura">Aventura</option>
+                        <option value="cartas">Cartas</option>
+                        <option value="corrida">Corrida </option>
+                        <option value="diversos">Diversos</option>
+                        <option value="esporte">Esporte</option>
+                        <option value="estrategia">Estratégia</option>
                         <option value="simulacao">Simulação</option>
                     </select>
                 </div>
             </form>
+            
+            <div class="mt-6 pt-4 border-t border-gray-700">
+                <button type="button" onclick="resetFilters()" 
+                        class="px-4 py-2 bg-gray-700 text-gray-300 font-semibold rounded-lg hover:bg-gray-600 transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 focus:ring-offset-brand-card">
+                    🔄 Limpar Todos os Filtros
+                </button>
+            </div>
         </section>
 
-        <!-- Contador -->
         <div aria-live="polite" aria-atomic="true" class="mb-6 text-gray-400 font-medium">
-            <span id="result-count">Exibindo 5 jogos</span>
+            <span id="result-count">Exibindo 10 jogos</span>
         </div>
 
-        <!-- Grid de Jogos -->
         <section aria-label="Lista de jogos">
             <div id="games-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
-                <!-- Jogo 1 -->
                 <article class="game-card flex flex-col bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
-                         data-level="cego-total" data-category="acao">
+                         data-level="cego-total" data-category="diversos" data-language="multi" data-price="gratuito">
                     <div class="relative h-48 bg-gray-800 shrink-0">
-                        <a href="https://store.steampowered.com/app/1325880/The_Vale_Shadow_of_the_Crown/" target="_blank" tabindex="-1" class="block h-full w-full focus:outline-none">
-                            <!-- NOTA: Se você baixou a imagem, troque o src abaixo para "img/the-vale.jpg" -->
-                            <img src="https://placehold.co/600x400/000000/FFFFFF/png?text=Audio+Game" alt="Capa do jogo The Vale: Shadow of the Crown" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                            <div class="absolute top-2 right-2 bg-black/80 text-brand-accent text-xs font-bold px-2 py-1 rounded border border-brand-accent">
-                                Áudio 3D
+                        <a href="http://pragmapragma.free.fr/crazy-party" target="_blank" tabindex="-1" class="block h-full w-full focus:outline-none">
+                            <img src="https://placehold.co/600x400/0f172a/FFFFFF/png?text=Crazy+Party" alt="Capa do jogo Crazy Party" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute top-2 right-2 bg-black/80 text-green-400 text-xs font-bold px-2 py-1 rounded border border-green-700">
+                                Áudio Game
                             </div>
                         </a>
                     </div>
                     <div class="p-6 flex flex-col flex-grow">
                         <div class="mb-4">
                             <h3 class="text-2xl font-bold text-white mb-2">
-                                <a href="https://store.steampowered.com/app/1325880/The_Vale_Shadow_of_the_Crown/" target="_blank" class="hover:text-brand-accent transition-colors">The Vale</a>
+                                <a href="http://pragmapragma.free.fr/crazy-party" target="_blank" class="hover:text-brand-accent transition-colors">Crazy Party</a>
                             </h3>
                             <div class="flex flex-wrap gap-2 mb-3">
                                 <span class="bg-green-900 text-green-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-green-700">Cego Total</span>
-                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Ação</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Diversos</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Português/Inglês</span>
                             </div>
                             <p class="text-gray-400 text-sm leading-relaxed">
-                                Uma aventura baseada puramente em áudio 3D. Você joga como um herói cego e deve lutar e explorar usando apenas sua audição.
+                                O Crazy Party tem três modos de jogo: aventura, com mundos para explorar e desbloquear, mini jogos para ganhar e desbloquear; modo batalha, um jogo de cartas; e modo tabuleiro.
                             </p>
                         </div>
                         <div class="mt-auto pt-4 border-t border-gray-700 w-full">
-                            <a href="https://store.steampowered.com/app/1325880/The_Vale_Shadow_of_the_Crown/" target="_blank" rel="noopener noreferrer"
+                            <a href="http://pragmapragma.free.fr/crazy-party" target="_blank" rel="noopener noreferrer"
                                class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
-                                Baixar / Comprar na Steam
+                                Baixar (Download Direto)
                             </a>
                         </div>
                     </div>
                 </article>
 
-                <!-- Jogo 2 -->
                 <article class="game-card flex flex-col bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
-                         data-level="cego-total" data-category="acao">
+                         data-level="cego-total" data-category="acao" data-language="portugues" data-price="gratuito">
+                    <div class="relative h-48 bg-gray-800 shrink-0">
+                        <a href="https://deficienciavisual.com.br/files/audiogames/darkdestroyer-ptb.exe" target="_blank" tabindex="-1" class="block h-full w-full focus:outline-none">
+                            <img src="https://placehold.co/600x400/0f172a/FFFFFF/png?text=Dark+Destroyer" alt="Capa do jogo Dark Destroyer" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </a>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="mb-4">
+                            <h3 class="text-2xl font-bold text-white mb-2">
+                                <a href="https://deficienciavisual.com.br/files/audiogames/darkdestroyer-ptb.exe" target="_blank" class="hover:text-brand-accent transition-colors">Dark Destroyer</a>
+                            </h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-green-900 text-green-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-green-700">Cego Total</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Ação</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Português</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Neste jogo controlamos uma nave espacial e precisamos destruir naves inimigas antes que elas consigam pousar.
+                            </p>
+                        </div>
+                        <div class="mt-auto pt-4 border-t border-gray-700 w-full">
+                            <a href="https://deficienciavisual.com.br/files/audiogames/darkdestroyer-ptb.exe" target="_blank" rel="noopener noreferrer"
+                               class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
+                                Baixar (Download Direto)
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="game-card flex flex-col bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
+                         data-level="cego-total" data-category="corrida" data-language="portugues" data-price="gratuito">
+                    <div class="relative h-48 bg-gray-800 shrink-0">
+                        <a href="https://deficienciavisual.com.br/files/audiogames/topspeed3-ptb.exe" target="_blank" tabindex="-1" class="block h-full w-full focus:outline-none">
+                            <img src="https://placehold.co/600x400/0f172a/FFFFFF/png?text=Top+Speed" alt="Capa do jogo Top Speed" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </a>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="mb-4">
+                            <h3 class="text-2xl font-bold text-white mb-2">
+                                <a href="https://deficienciavisual.com.br/files/audiogames/topspeed3-ptb.exe" target="_blank" class="hover:text-brand-accent transition-colors">Top Speed</a>
+                            </h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-green-900 text-green-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-green-700">Cego Total</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Corrida</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Português</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                É um jogo de corrida de carros em que você pode jogar de forma offline ou online com pessoas do mundo todo. O objetivo do jogo é manter o carro centralizado na pista para que ele não bata nas laterais, e finalizar a corrida.
+                            </p>
+                        </div>
+                        <div class="mt-auto pt-4 border-t border-gray-700 w-full">
+                            <a href="https://deficienciavisual.com.br/files/audiogames/topspeed3-ptb.exe" target="_blank" rel="noopener noreferrer"
+                               class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
+                                Baixar (Download Direto)
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="game-card flex flex-col bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
+                         data-level="cego-total" data-category="simulacao" data-language="multi" data-price="gratuito">
+                    <div class="relative h-48 bg-gray-800 shrink-0">
+                        <a href="https://www.stefankiss.sk/files/eurofly2/Eurofly_2_ful_setup.exe" target="_blank" tabindex="-1" class="block h-full w-full focus:outline-none">
+                            <img src="https://placehold.co/600x400/0f172a/FFFFFF/png?text=Eurofly" alt="Capa do jogo Eurofly" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </a>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="mb-4">
+                            <h3 class="text-2xl font-bold text-white mb-2">
+                                <a href="https://www.stefankiss.sk/files/eurofly2/Eurofly_2_ful_setup.exe" target="_blank" class="hover:text-brand-accent transition-colors">Eurofly</a>
+                            </h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-green-900 text-green-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-green-700">Cego Total</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Simulação</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Português/Inglês</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Eurofly é um simulador de voo. Nele é possível ser piloto de avião, semelhante ao mundo real.
+                            </p>
+                        </div>
+                        <div class="mt-auto pt-4 border-t border-gray-700 w-full">
+                            <a href="https://www.stefankiss.sk/files/eurofly2/Eurofly_2_ful_setup.exe" target="_blank" rel="noopener noreferrer"
+                               class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
+                                Baixar (Download Direto)
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="game-card flex flex-col bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
+                         data-level="cego-total" data-category="cartas" data-language="multi" data-price="gratuito">
+                    <div class="relative h-48 bg-gray-800 shrink-0">
+                        <a href="https://www.qcsalon.net/autodl/quentinc-gameroom-2.2.8-multilingual-setup.exe" target="_blank" tabindex="-1" class="block h-full w-full focus:outline-none">
+                            <img src="https://placehold.co/600x400/0f172a/FFFFFF/png?text=Playroom" alt="Capa do jogo Playroom" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute top-2 right-2 bg-black/80 text-white text-xs font-bold px-2 py-1 rounded border border-gray-700">
+                                Multijogador
+                            </div>
+                        </a>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="mb-4">
+                            <h3 class="text-2xl font-bold text-white mb-2">
+                                <a href="https://www.qcsalon.net/autodl/quentinc-gameroom-2.2.8-multilingual-setup.exe" target="_blank" class="hover:text-brand-accent transition-colors">Playroom</a>
+                            </h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-green-900 text-green-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-green-700">Cego Total</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Cartas</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Português/Inglês/Espanhol</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                É uma plataforma de jogos de cartas online. É possível jogar Uno, Poker, Banco Imobiliário, Mil Milhas, Scopa, dentre outros.
+                            </p>
+                        </div>
+                        <div class="mt-auto pt-4 border-t border-gray-700 flex flex-col gap-2 w-full">
+                            <a href="https://www.qcsalon.net/autodl/quentinc-gameroom-2.2.8-multilingual-setup.exe" target="_blank" rel="noopener noreferrer"
+                               class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
+                                Baixar (Download Direto)
+                            </a>
+                            <a href="https://www.qcsalon.net/autodl/quentinc-gameroom-2.2.8-multilingual-setup.exe" target="_blank" rel="noopener noreferrer"
+                               class="block w-full text-center bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 rounded-lg transition-colors text-sm">
+                                Jogar Online
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="game-card flex flex-col bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
+                         data-level="cego-total" data-category="aventura" data-language="multi" data-price="pago">
                     <div class="relative h-48 bg-gray-800 shrink-0">
                          <a href="https://store.steampowered.com/app/437530/A_Blind_Legend/" target="_blank" tabindex="-1" class="block h-full w-full focus:outline-none">
-                            <img src="https://placehold.co/600x400/333333/FFFFFF/png?text=Cavaleiro" alt="Ilustração de um cavaleiro em A Blind Legend" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                            <img src="https://placehold.co/600x400/333333/FFFFFF/png?text=Cavaleiro+Cego" alt="Ilustração de um cavaleiro em A Blind Legend" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute top-2 right-2 bg-black/80 text-brand-accent text-xs font-bold px-2 py-1 rounded border border-brand-accent">
+                                Áudio 3D
+                            </div>
                          </a>
                     </div>
                     <div class="p-6 flex flex-col flex-grow">
@@ -180,9 +334,10 @@
                             <div class="flex flex-wrap gap-2 mb-3">
                                 <span class="bg-green-900 text-green-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-green-700">Cego Total</span>
                                 <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Aventura</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Português/Inglês</span>
                             </div>
                             <p class="text-gray-400 text-sm leading-relaxed">
-                                O primeiro jogo de ação-aventura sem vídeo. Use seus ouvidos e a tela touch para guiar o cavaleiro Edward.
+                                Nesta aventura, encarnamos Edward Blake, um espadachim cego, guiado por sua filha Louise para resgatar sua esposa raptada pelos guardas de um rei louco.
                             </p>
                         </div>
                         <div class="mt-auto pt-4 border-t border-gray-700 w-full">
@@ -194,98 +349,61 @@
                     </div>
                 </article>
 
-                <!-- Jogo 3 -->
                 <article class="game-card flex flex-col bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
-                         data-level="leitor-tela" data-category="simulacao">
+                         data-level="cego-total" data-category="aventura" data-language="multi" data-price="pago">
                     <div class="relative h-48 bg-gray-800 shrink-0">
-                        <a href="https://www.nexusmods.com/stardewvalley/mods/10638" target="_blank" tabindex="-1" class="block h-full w-full focus:outline-none">
-                            <img src="https://placehold.co/600x400/2ecc71/FFFFFF/png?text=Fazenda" alt="Pixel art de uma fazenda em Stardew Valley" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                            <div class="absolute top-2 right-2 bg-yellow-600 text-white text-xs font-bold px-2 py-1 rounded">
-                                Requer Mod
+                        <a href="https://www.xbox.com/pt-BR/games/store/the-vale-shadow-of-the-crown/9n4vkp9f0s68" target="_blank" tabindex="-1" class="block h-full w-full focus:outline-none">
+                            <img src="https://placehold.co/600x400/000000/FFFFFF/png?text=The+Vale" alt="Capa do jogo The Vale: Shadow of the Crown" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute top-2 right-2 bg-black/80 text-brand-accent text-xs font-bold px-2 py-1 rounded border border-brand-accent">
+                                Áudio 3D
                             </div>
                         </a>
                     </div>
                     <div class="p-6 flex flex-col flex-grow">
                         <div class="mb-4">
                             <h3 class="text-2xl font-bold text-white mb-2">
-                                <a href="https://www.nexusmods.com/stardewvalley/mods/10638" target="_blank" class="hover:text-brand-accent transition-colors">Stardew Valley</a>
+                                <a href="https://www.xbox.com/pt-BR/games/store/the-vale-shadow-of-the-crown/9n4vkp9f0s68" target="_blank" class="hover:text-brand-accent transition-colors">The Vale</a>
                             </h3>
                             <div class="flex flex-wrap gap-2 mb-3">
-                                <span class="bg-blue-900 text-blue-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-blue-700">Leitor de Tela</span>
-                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Simulação</span>
+                                <span class="bg-green-900 text-green-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-green-700">Cego Total</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Aventura</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Português/Inglês</span>
                             </div>
                             <p class="text-gray-400 text-sm leading-relaxed">
-                                Jogo de fazenda jogável com leitores de tela usando o mod "Stardew Access". É necessário ter o jogo original.
-                            </p>
-                        </div>
-                        <div class="mt-auto pt-4 border-t border-gray-700 flex flex-col gap-2 w-full">
-                            <a href="https://www.nexusmods.com/stardewvalley/mods/10638" target="_blank" rel="noopener noreferrer"
-                               class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
-                                Baixar Mod de Acesso
-                            </a>
-                            <a href="https://store.steampowered.com/app/413150/Stardew_Valley/" target="_blank" rel="noopener noreferrer"
-                               class="block w-full text-center bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 rounded-lg transition-colors text-sm">
-                                Comprar Jogo Original
-                            </a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Jogo 4 -->
-                <article class="game-card flex flex-col bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
-                         data-level="baixa-visao" data-category="acao">
-                    <div class="relative h-48 bg-gray-800 shrink-0">
-                        <a href="https://www.playstation.com/pt-br/games/the-last-of-us-part-i/" target="_blank" tabindex="-1" class="block h-full w-full focus:outline-none">
-                            <img src="https://placehold.co/600x400/555555/FFFFFF/png?text=TLOU" alt="Cena dramática de The Last of Us" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                            <div class="absolute top-2 right-2 bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded">
-                                Nativo
-                            </div>
-                        </a>
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow">
-                        <div class="mb-4">
-                            <h3 class="text-2xl font-bold text-white mb-2">
-                                <a href="https://www.playstation.com/pt-br/games/the-last-of-us-part-i/" target="_blank" class="hover:text-brand-accent transition-colors">The Last of Us Part I</a>
-                            </h3>
-                            <div class="flex flex-wrap gap-2 mb-3">
-                                <span class="bg-purple-900 text-purple-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-purple-700">Baixa Visão</span>
-                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Ação</span>
-                            </div>
-                            <p class="text-gray-400 text-sm leading-relaxed">
-                                Oferece opções nativas robustas de alto contraste, ampliação e áudio descritivo para navegação e combate.
+                                Você encarna o Príncipe Alexander, o segundo filho cego do rei, que cai em uma emboscada ao tentar visitar o castelo. Uma aventura baseada puramente em áudio.
                             </p>
                         </div>
                         <div class="mt-auto pt-4 border-t border-gray-700 w-full">
-                            <a href="https://www.playstation.com/pt-br/games/the-last-of-us-part-i/" target="_blank" rel="noopener noreferrer"
+                            <a href="https://www.xbox.com/pt-BR/games/store/the-vale-shadow-of-the-crown/9n4vkp9f0s68" target="_blank" rel="noopener noreferrer"
                                class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
-                                Comprar na PS Store
+                                Baixar / Comprar na Xbox Store
                             </a>
                         </div>
                     </div>
                 </article>
-
-                <!-- Jogo 5 -->
+                
                 <article class="game-card flex flex-col bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
-                         data-level="leitor-tela" data-category="puzzle">
+                         data-level="cego-total" data-category="estrategia" data-language="ingles" data-price="gratuito">
                     <div class="relative h-48 bg-gray-800 shrink-0">
-                        <a href="https://hearthstoneaccess.github.io/" target="_blank" tabindex="-1" class="block h-full w-full focus:outline-none">
-                            <img src="https://placehold.co/600x400/8b4513/FFFFFF/png?text=Cartas" alt="Tabuleiro de cartas do Hearthstone" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        <a href="https://hearthstone.blizzard.com/pt-br" target="_blank" tabindex="-1" class="block h-full w-full focus:outline-none">
+                            <img src="https://placehold.co/600x400/8b4513/FFFFFF/png?text=Hearthstone" alt="Tabuleiro de cartas do Hearthstone" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
                             <div class="absolute top-2 right-2 bg-yellow-600 text-white text-xs font-bold px-2 py-1 rounded">
-                                Requer Mod
+                                Requer Patch
                             </div>
                         </a>
                     </div>
                     <div class="p-6 flex flex-col flex-grow">
                         <div class="mb-4">
                             <h3 class="text-2xl font-bold text-white mb-2">
-                                <a href="https://hearthstoneaccess.github.io/" target="_blank" class="hover:text-brand-accent transition-colors">Hearthstone Access</a>
+                                <a href="https://hearthstone.blizzard.com/pt-br" target="_blank" class="hover:text-brand-accent transition-colors">Hearthstone</a>
                             </h3>
                             <div class="flex flex-wrap gap-2 mb-3">
-                                <span class="bg-blue-900 text-blue-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-blue-700">Leitor de Tela</span>
-                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Estratégia/Cartas</span>
+                                <span class="bg-green-900 text-green-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-green-700">Cego Total</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Estratégia</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Inglês (Patch)</span>
                             </div>
                             <p class="text-gray-400 text-sm leading-relaxed">
-                                Um patch que torna o jogo de cartas acessível para leitores de tela. É necessário o jogo base instalado.
+                                Um jogo de cartas que utiliza feitiços e heróis de Warcraft. É necessário o uso de um Patch de acesso para garantir a acessibilidade.
                             </p>
                         </div>
                         <div class="mt-auto pt-4 border-t border-gray-700 flex flex-col gap-2 w-full">
@@ -301,6 +419,72 @@
                     </div>
                 </article>
 
+                <article class="game-card flex flex-col bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
+                         data-level="cego-total" data-category="arcade" data-language="ingles" data-price="gratuito">
+                    <div class="relative h-48 bg-gray-800 shrink-0">
+                        <a href="https://audiogamehub.com/wp-content/uploads/2016/05/AGH_Setup_1.1.6.exe" target="_blank" tabindex="-1" class="block h-full w-full focus:outline-none">
+                            <img src="https://placehold.co/600x400/0f172a/FFFFFF/png?text=AGH" alt="Capa do jogo Audio Game Hub" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute top-2 right-2 bg-black/80 text-green-400 text-xs font-bold px-2 py-1 rounded border border-green-700">
+                                8 em 1
+                            </div>
+                        </a>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="mb-4">
+                            <h3 class="text-2xl font-bold text-white mb-2">
+                                <a href="https://audiogamehub.com/wp-content/uploads/2016/05/AGH_Setup_1.1.6.exe" target="_blank" class="hover:text-brand-accent transition-colors">Audio Game Hub</a>
+                            </h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-green-900 text-green-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-green-700">Cego Total</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Arcade</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Inglês</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Contém oito jogos diferentes: slot machine, tiro ao alvo, caça de animais na floresta, torneio de samorai, labirinto, organização de caixas e agrupamento de animais.
+                            </p>
+                        </div>
+                        <div class="mt-auto pt-4 border-t border-gray-700 w-full">
+                            <a href="https://audiogamehub.com/wp-content/uploads/2016/05/AGH_Setup_1.1.6.exe" target="_blank" rel="noopener noreferrer"
+                               class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
+                                Baixar (Download Direto)
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="game-card flex flex-col bg-brand-card rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-brand-accent transition-all duration-300 group"
+                         data-level="cego-total" data-category="esporte" data-language="portugues" data-price="gratuito">
+                    <div class="relative h-48 bg-gray-800 shrink-0">
+                        <a href="HTTPS://www.acessibilidadeemfoco.com/jogos/audiodisco-ptb.exe" target="_blank" tabindex="-1" class="block h-full w-full focus:outline-none">
+                            <img src="https://placehold.co/600x400/0f172a/FFFFFF/png?text=Audiodisco" alt="Capa do jogo Audiodisco" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute top-2 right-2 bg-black/80 text-white text-xs font-bold px-2 py-1 rounded border border-gray-700">
+                                1v1
+                            </div>
+                        </a>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="mb-4">
+                            <h3 class="text-2xl font-bold text-white mb-2">
+                                <a href="HTTPS://www.acessibilidadeemfoco.com/jogos/audiodisco-ptb.exe" target="_blank" class="hover:text-brand-accent transition-colors">Audiodisco</a>
+                            </h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="bg-green-900 text-green-100 text-xs font-semibold px-2.5 py-0.5 rounded border border-green-700">Cego Total</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Esporte</span>
+                                <span class="bg-gray-700 text-gray-300 text-xs font-semibold px-2.5 py-0.5 rounded">Português</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Jogo onde você deve lançar um disco contra seu oponente, impedindo que ele o pare. A partida termina quando um dos jogadores alcança cinco pontos.
+                            </p>
+                        </div>
+                        <div class="mt-auto pt-4 border-t border-gray-700 w-full">
+                            <a href="HTTPS://www.acessibilidadeemfoco.com/jogos/audiodisco-ptb.exe" target="_blank" rel="noopener noreferrer"
+                               class="block w-full text-center bg-brand-accent hover:bg-sky-400 text-brand-dark font-bold py-3 rounded-lg transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent focus:ring-offset-brand-card">
+                                Baixar (Download Direto)
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
             </div>
             
             <div id="no-results" class="hidden text-center py-12">
@@ -309,7 +493,6 @@
             </div>
         </section>
 
-        <!-- Sobre -->
         <section id="sobre" class="mt-16 bg-brand-card p-8 rounded-xl border border-gray-700">
             <h2 class="text-2xl font-bold text-white mb-4">Sobre o AudioPlay</h2>
             <div class="text-gray-400 space-y-4">
@@ -322,7 +505,6 @@
             </div>
         </section>
 
-        <!-- Sugestão -->
         <section id="sugerir" class="mt-12 border-t border-gray-800 pt-10 text-center">
             <h3 class="text-2xl font-bold text-white mb-4">Conhece outro jogo acessível?</h3>
             <p class="text-gray-400 mb-6 max-w-2xl mx-auto">
@@ -340,7 +522,6 @@
         <p class="mt-2">Todos os links externos são de responsabilidade de seus criadores.</p>
     </footer>
 
-    <!-- Script JS separado -->
     <script src="js/script.js"></script>
 </body> 
 </html>

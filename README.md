@@ -4,7 +4,7 @@ MVP do Projeto de Empreendedorismo > Uma plataforma centralizada para curadoria 
 
 📌 Sobre o Projeto
 
-O AudioPlay nasce para resolver a "lacuna de informação" no mercado de jogos acessíveis. Pessoas com deficiência visual sabem que existem jogos para elas, mas têm dificuldade em encontrá-los e validar se são realmente compatíveis com suas necessidades (ex: leitores de tela, áudio 3D, alto contraste).
+O AudioPlay nasce para resolver a "lacuna de informação" no mercado de jogos acessíveis. Pessoas com deficiência visual sabem que existem jogos para elas, mas têm dificuldade em encontrá-los e validar se são realmente compatíveis com suas necessidades (ex: leitores de tela ou  alto contraste).
 
 Este repositório contém o MVP (Produto Mínimo Viável): uma Landing Page funcional que serve como catálogo e demonstra a proposta de valor do projeto.
 
@@ -14,7 +14,7 @@ Interface 100% Acessível: Navegável por teclado e otimizada para leitores de t
 
 Catálogo com Filtros Reais: - Filtragem por Nível de Acessibilidade (Cego Total, Baixa Visão, Leitor de Tela).
 
-Filtragem por Categoria (Ação, RPG, Puzzle, etc.).
+Filtragem por Gênero (Ação, aventura, estratégia,  etc.).
 
 Busca por nome do jogo.
 
